@@ -7,10 +7,11 @@ class FollowerList extends React.Component {
         followers: []
     }
 
-    componentDidMount() {
-        axios.get('https://api.github.com/users/danielaescutia07/followers')
+    componentDidUpdate() {
+        axios.get(`https://api.github.com/users/${this.props.userHandle}/followers`)
             .then(res => {
                 this.setState({
+                    ...this.state,
                     followers: res.data
                 });
             })
@@ -22,10 +23,12 @@ class FollowerList extends React.Component {
     render () {
         return (
             <div>
-                <h3>My Followers</h3>
-                {this.state.followers.map(follower => {
-                    return <Follower follower={follower} key={follower.id} />
-                })}
+                <h2 style={{ paddingTop: '5%'}}>My Followers</h2>
+                <div className='wrapper'>
+                    {this.state.followers.map(follower => {
+                        return <Follower follower={follower} key={follower.id} />
+                    })}
+                </div>
             </div>
         )
     }
